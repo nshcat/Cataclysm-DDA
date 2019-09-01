@@ -40,7 +40,17 @@ bool auto_note_settings::save()
         JsonOut jout{ fstr, true };
 
         jout.start_object();
-
+        
+        jout.member( "settings" );
+        
+        jout.start_object();
+        
+        jout.member( "general_enabled", enableAutoNotes );
+        jout.member( "on_map_extras", enableAutoNotesExtras );
+        jout.member( "on_stairs", enableAutoNotesStairs );
+        
+        jout.end_object();
+        
         jout.member( "enabled" );
 
         jout.start_array();
@@ -84,6 +94,24 @@ void auto_note_settings::load()
                     const std::string entry = jin.get_string();
                     discovered.insert( string_id<map_extra> {entry} );
                 }
+            } else if( name == "settings" ) {
+				jin.start_object();
+				
+				while( !jin.end_object() ) {
+					const std::string name = jin.get_member_name();
+					
+					if( name == "general_enabled" ) {
+						enableAutoNotes = jin.get_bool();
+					} else if( name == "on_stairs" ) {
+						enableAutoNotesStairs = jin.get_bool();
+					} else if( name == "on_map_extras" ) {
+						enableAutoNotesExtras = jin.get_bool();
+					} else {
+						jin.skip_value();
+					}
+					
+				}
+	
             } else {
                 jin.skip_value();
             }
@@ -106,6 +134,8 @@ void auto_note_settings::default_initialize()
             autoNoteEnabled.insert( extra.id );
         }
     }
+    
+    // TODO: figure out how to use old option state
 }
 
 void auto_note_settings::set_discovered( const string_id<map_extra> &mapExtId )
