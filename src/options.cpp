@@ -1177,19 +1177,19 @@ void options_manager::add_options_general()
 
     add( "AUTO_NOTES", "general", translate_marker( "Auto notes" ),
          translate_marker( "If true, automatically sets notes" ),
-         false
+         false, COPT_ALWAYS_HIDE
        );
 
     add( "AUTO_NOTES_STAIRS", "general", translate_marker( "Auto notes (stairs)" ),
          translate_marker( "If true, automatically sets notes on places that have stairs that go up or down" ),
-         false
+         false, COPT_ALWAYS_HIDE
        );
 
     get_option( "AUTO_NOTES_STAIRS" ).setPrerequisite( "AUTO_NOTES" );
 
     add( "AUTO_NOTES_MAP_EXTRAS", "general", translate_marker( "Auto notes (map extras)" ),
          translate_marker( "If true, automatically sets notes on places that contain various map extras" ),
-         false
+         false, COPT_ALWAYS_HIDE
        );
 
     get_option( "AUTO_NOTES_MAP_EXTRAS" ).setPrerequisite( "AUTO_NOTES" );

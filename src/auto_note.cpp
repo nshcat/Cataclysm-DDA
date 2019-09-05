@@ -108,10 +108,8 @@ void auto_note_settings::load()
 						enableAutoNotesExtras = jin.get_bool();
 					} else {
 						jin.skip_value();
-					}
-					
+					}	
 				}
-	
             } else {
                 jin.skip_value();
             }
@@ -135,7 +133,11 @@ void auto_note_settings::default_initialize()
         }
     }
     
-    // TODO: figure out how to use old option state
+    // Use the hidden options as default values. This allows to set the default values in a central place instead
+    // of here.
+    enableAutoNotes = get_option<bool>( "AUTO_NOTES" );
+    enableAutoNotesStairs = get_option<bool>( "AUTO_NOTES_STAIRS" );
+    enableAutoNotesExtras = get_option<bool>( "AUTO_NOTES_MAP_EXTRAS" );
 }
 
 void auto_note_settings::set_discovered( const string_id<map_extra> &mapExtId )
